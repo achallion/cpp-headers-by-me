@@ -20,6 +20,8 @@ namespace dasturchi
             ~trienode();                             // trienode deconstructor
 
             bool ispresentinnext(char);              // tells if current char is present in next part of it
+            trienode *insert(char);                  // insert character in map and return address of that trienode
+            void empty();                            // deletes all trienodes in map
     };
 
     class trie                                       // Trie data structure definition
@@ -32,6 +34,8 @@ namespace dasturchi
             ~trie();                                 // trie deconstructor
 
             void insert(string &);
+            void empty(trienode *head = NULL);
+            bool search(string);
     };
 } // namespace dasturchi
 

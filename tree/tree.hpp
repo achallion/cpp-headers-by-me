@@ -11,8 +11,17 @@ namespace maurya
     template <class T>
     class tree_node
     {
-        T value;
-        vector<T> child;
+        public:
+        
+            T value;
+            vector<tree_node<T> *> children;
+
+            tree_node(T &val);  // constructor
+            tree_node(T &val, vector<tree_node<T> *> children); // constructor
+            ~tree_node();  // destructor
+
+            
     };
+
 } // namespace maurya
 #endif

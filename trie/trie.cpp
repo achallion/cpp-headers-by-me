@@ -38,14 +38,15 @@ namespace dasturchi
 
     void trienode :: empty()
     {
-        if(this == NULL)
-            return;
         unordered_map<char, trienode *>::iterator it, end;
         end = next.end();
         for (it = next.begin(); it != end; it++)
         {
+            it->second->empty();
             delete it->second;
         }
+        cout << ch << " ";
+        return;
     }
 
     trie :: trie()
@@ -54,7 +55,6 @@ namespace dasturchi
 
     trie :: ~trie()
     {
-        //empty();
     }
 
     void trie :: insert(string &str)
@@ -70,22 +70,6 @@ namespace dasturchi
         ptr->isterminal = true;
     }
 
-    void trie :: empty(trienode *head)
-    {
-        if(head == NULL)
-            head = &root;
-        if(head->next.size() == 0)
-            return;
-        unordered_map<char, trienode *>::iterator it, end;
-        end = head->next.end();
-        for (it = head->next.begin(); it != end; it++)
-        {
-            empty(it->second);
-        }
-        head->empty();
-        return;
-    }
-
     bool trie :: search(string str)
     {
         trienode *ptr = &root;
@@ -95,9 +79,10 @@ namespace dasturchi
         {
             x = str[i];
             if (!ptr->ispresentinnext(x))
-               {
-                   return false;
-               }ptr = ptr->next[x];
+            {
+               return false;
+            }
+            ptr = ptr->next[x];
         }
         return ptr->isterminal;
     }

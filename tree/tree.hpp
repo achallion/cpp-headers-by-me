@@ -23,5 +23,19 @@ namespace maurya
             
     };
 
+    template <class T>
+    class tree
+    {
+        private:
+            tree_node<T> *root;
+        
+        public:
+            tree();  // constructor
+            ~tree(); // destructor
+
+            tree_node<T> *build(int arr[]);      // build a tree from an array
+            void eraseall(tree_node<T> *ptr = NULL); // delete whole tree
+    };
+
 } // namespace maurya
 #endif

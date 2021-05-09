@@ -1,41 +1,50 @@
 #ifndef TREE_HPP
 #define TREE_HPP
 
-#include <iostream>
 #include <vector>
+#include <iostream>
+#include <queue>
+#include <stack>
+#include <unordered_map>
 
 using namespace std;
 
-namespace maurya
+namespace kbbk
 {
-    template <class T>
-    class tree_node
+
+    template <typename T>
+    class Treenode
     {
-        public:
-        
-            T value;
-            vector<tree_node<T> *> children;
+    public:
+        T data;
+        vector<Treenode<T> *> children;
 
-            tree_node(T &val);  // constructor
-            tree_node(T &val, vector<tree_node<T> *> children); // constructor
-            ~tree_node();  // destructor
-
-            
+        Treenode();
+        Treenode(T);
+        ~Treenode();
     };
 
-    template <class T>
-    class tree
+    template <typename T>
+    class Tree
     {
-        private:
-            tree_node<T> *root;
-        
-        public:
-            tree();  // constructor
-            ~tree(); // destructor
+        Treenode<T> *inputdfs();
 
-            tree_node<T> *build(int arr[]);      // build a tree from an array
-            void eraseall(tree_node<T> *ptr = NULL); // delete whole tree
+    public:
+        Treenode<T> *root;
+
+        Tree();
+        ~Tree();
+
+        void input();
+        void inputlw();
+        int countnodes(Treenode<T> *head = NULL);
+        void printdfs(Treenode<T> *root = NULL);
+        void printbfs();
+        int height();
     };
 
-} // namespace maurya
+};
+
+#include "tree.cpp"
+
 #endif

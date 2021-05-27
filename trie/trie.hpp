@@ -2,41 +2,43 @@
 #define TRIE_HPP
 
 #include <unordered_map>
-#include <iostream>
 
 using namespace std;
 
-namespace dasturchi
+namespace kbbk
 {
-    class trienode                                   // Represents a node in trie data structure
+
+    template <typename T>
+    class trienode
     {
-        public:
-            char ch;
-            unordered_map<char, trienode *> next;
-            bool isterminal;
+    public:
+        T data;
+        unordered_map<T, trienode<T> *> children;
+        bool isterminal;
 
-            trienode();                              // trienode constructor
-            trienode(char);                          // trienode constructor taking character
-            ~trienode();                             // trienode deconstructor
-
-            bool ispresentinnext(char);              // tells if current char is present in next part of it
-            trienode *insert(char);                  // insert character in map and return address of that trienode
-            void empty();                            // deletes all trienodes in map
+        trienode();
+        ~trienode();
     };
 
-    class trie                                       // Trie data structure definition
+}
+
+namespace kbbk
+{
+    template <typename T>
+    class trie
     {
-        private:
-            trienode root;                           // Root node of trie data structure
+    protected:
+    public:
+        trienode<T> *root;
 
-        public:
-            trie();                                  // trie constructor
-            ~trie();                                 // trie deconstructor
+        trie();
+        ~trie();
 
-            void insert(string &);
-            void empty(trienode *head = NULL);
-            bool search(string);
+        void insert(T *, int, trienode<T> *root = NULL);
+        bool search(T *, int);
     };
-} // namespace dasturchi
+}
+
+#include "trie.cpp"
 
 #endif

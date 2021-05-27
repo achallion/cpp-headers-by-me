@@ -3,89 +3,78 @@
 
 #include "trie.hpp"
 
-namespace dasturchi
+namespace kbbk // trienode
 {
-    trienode :: trienode() : ch('\0') , isterminal(false)
+    template <typename T>
+    trienode<T>::trienode()
     {
+        this->data = 0;
+        this->isterminal = false;
     }
 
-    trienode ::trienode(char x) : ch(x), isterminal(false)
+    template <typename T>
+    trienode<T>::~trienode()
     {
+        for (pair<T, trienode<T> *> p : this->children)
+            delete p.second;
     }
 
-    trienode :: ~trienode()
+};
+
+namespace kbbk // trie
+{
+    template <typename T>
+    trie<T>::trie()
     {
-        empty();
+        this->root = new trienode<T>;
+        this->root->isterminal = false;
+        this->root->data = 0;
     }
 
-    bool trienode :: ispresentinnext(char x)
+    template <typename T>
+    trie<T>::~trie()
     {
-        unordered_map<char, trienode *>::iterator end;
-        end = next.end();
-        if (next.find(x) == end)
-            return false;
-        return true;
+        delete this->root;
     }
 
-    trienode* trienode :: insert(char x)
+    template <typename T>
+    void trie<T>::insert(T *arr, int n, trienode<T> *root)
     {
-        if(ispresentinnext(x))
-            return next[x];
-        trienode *temp = new trienode(x);
-        next[x] = temp;
-        return temp;
-    }
+        // base
 
-    void trienode :: empty()
-    {
-        unordered_map<char, trienode *>::iterator it, end;
-        end = next.end();
-        for (it = next.begin(); it != end; it++)
+        if (root == NULL)
         {
-            it->second->empty();
-            delete it->second;
+            insert(arr, n, this->root);
+            return;
         }
-        cout << ch << " ";
-        return;
-    }
 
-    trie :: trie()
-    {
-    }
-
-    trie :: ~trie()
-    {
-    }
-
-    void trie :: insert(string &str)
-    {
-        trienode *ptr = &root;
-        int n = str.size();
-        char x = '\0';
-        for (int i = 0; i < n; i++)
+        if (n == 0)
         {
-            x = str[i];
-            ptr = ptr->insert(x);
+            root->isterminal = true;
+            return;
         }
-        ptr->isterminal = true;
+
+        // rec
+        if (!root->children[*arr])
+        {
+            trienode<T> *temp = new trienode<T>;
+            temp->data = *arr;
+            root->children[*arr] = temp;
+        }
+
+        insert(arr + 1, n - 1, root->children[*arr]);
     }
 
-    bool trie :: search(string str)
+    template <typename T>
+    bool trie<T>::search(T *arr, int n)
     {
-        trienode *ptr = &root;
-        int n = str.size();
-        char x = '\0';
-        for (int i = 0; i < n; i++)
+        trienode<T>*ptr = this->root;
+        while()
         {
-            x = str[i];
-            if (!ptr->ispresentinnext(x))
-            {
-               return false;
-            }
-            ptr = ptr->next[x];
+            ptr->
         }
-        return ptr->isterminal;
     }
-} // namespace dasturchi
+
+};
 
 #endif
